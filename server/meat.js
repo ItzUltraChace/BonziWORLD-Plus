@@ -535,17 +535,28 @@ let userCommands = {
 
         this.room.updateUser(this);
     },
+    char: function (color) {
+        
+        if (typeof color != "undefined") {
+            if (settings.bonziChars.indexOf(color) == -1) return;
+
+            this.public.color = color;
+        } else {
+            this.public.color = "swag";
+        }
+
+        this.room.updateUser(this);
+    },
     "pope": function() {
         
         this.public.color = "pope";
         this.room.updateUser(this);
     },
     "diogo": function() {
-		if (data.name == "Diogo" && this.getIp() == "84.91.29.6") {
 			this.public.color = "diogo";
 			this.room.updateUser(this);
-		} 
     },
+	//use the color command if you are diogo/doggis
     "asshole": function() {
         
         this.room.emit("asshole", {
