@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-	<title lang="en">BonziWORLD ReRevived</title>
-	<title lang="fr">BonziMONDE ressuscité de nouveau</title>
-	<title lang="ru">Бонзи МИР снова возрожден</title>
-        <!-- <title>BonziWORLD Revived+</title> -->
+	<title lang="en">BonziWORLD+</title>
+	<title lang="fr">BonziMONDE+</title>
+	<title lang="ru">Бонзи МИР+</title>
+        <!-- <title>BonziWORLD+</title> -->
         <meta charset="utf-8" />
         <meta content="" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
@@ -119,7 +119,7 @@
                 <div class="message_cont" id="error_cont">
                     <img src="/img/error/logo.png" /><br />
                     <br />
-                    <h1>BonziWORLD has encountered an error and needs to close.</h1>
+                    <h1>BonziWORLD.exe has encountered an error and needs to close.</h1>
                     <br />
                     Nah, but seriously there was an error and you got disconnected from the server. Chances are, your internet just died out for a brief moment or your device went to sleep. Otherwise the server just screwed up.<br />
                     <br />
@@ -136,17 +136,6 @@
                 <b>Message: </b><input id="dm_input" /><br />
                 <input type="hidden" id="dm_guid" /><br />
                 <button onclick="dm_send()">Send</button>
-            </div>
-            <div class="page no_selection" id="page_ban" style="display: none;">
-                <div class="message_cont" id="ban_cont">
-                    <img src="/img/ban/logo.png" /><br />
-                    <br />
-                    <h1>You got banned!</h1>
-                    <br />
-                    <br />
-                    <b>Why?&#32;</b><span id="ban_reason"></span><br />
-                    <b>When is it over?&#32;</b><span id="ban_end"></span><br />
-                </div>
             </div>
             <div class="page no_selection" id="page_game1" style="display: none;">
                 <div class="message_cont" id="ban_cont">
@@ -188,16 +177,6 @@
 					<button onclick='registerAccount()'>Register!</button>
                 </div>
             </div>
-            <div class="page no_selection" id="page_kick" style="display: none;">
-                <div class="message_cont" id="kick_cont">
-                    <img src="/img/ban/logo.png" /><br />
-                    <br />
-                    <h1>You got kicked!</h1>
-                    <br />
-                    <br />
-                    <b>Why?&#32;</b><span id="kick_reason"></span><br />
-                </div>
-            </div>
             <div class="page no_selection" id="page_ie" style="display: none;">
                 <div class="message_cont" id="ie_cont">
                     <img src="/img/icons/ie.png" /><br />
@@ -206,19 +185,6 @@
                     <br />
                     <br />
                     <b>What is my IE version?&#32;</b><span id="ie_version"></span><br />
-                </div>
-            </div>
-            <div class="page no_selection" id="page_skiddie" style="display: none;">
-                <div class="message_cont" id="skid_cont">
-                    <img src="/img/error/logo2.png" /><br />
-                    <br />
-                    <h1>Script Kiddie Detected!!</h1>
-                    <br />
-                    <p>You have now been disconnected from the server...</p>
-                    <br />
-                    <br />
-                    <b>Why?&#32;</b><br />
-                    <span id="ban_reason">You have been caught using inspect element!</span><br />
                 </div>
             </div>
             <div class="page no_selection" id="page_unsupp" style="display: none;">
