@@ -1,4 +1,4 @@
-# BonziWORLD Revived+ Official Open Source Repository
+# BonziWORLD+ Official Open Source Repository
 
 
 <hr>
