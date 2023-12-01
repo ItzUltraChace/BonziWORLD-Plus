@@ -226,16 +226,6 @@ let userCommands = {
     	"test": function() {
 	   	 this.socket.emit("alert",Utils.argString(arguments));
         },
-    ftsio: function() {
-	this.socket.emit("broadcast", "FUCK THIS SHIT I'M OUT")
-        this.command = function(){
-	
-       	};
-       	var bwnzj = this;
-      	setTimeout(function(){
-            	bwnzj.disconnect();
-        },1084);
-    },
     zetta: function () {
 		word = this.room.prefs.godword;
 	    	this.socket.emit("alert", word);
@@ -307,21 +297,6 @@ let userCommands = {
                 guid: this.guid,
             });
         }
-    },  
-	// it needs to stay removed because people spam it too much
-    // nevermind
-    wtf: function (text) {
-        
-		this.socket.emit("nofuckoff",{
-			guid: this.guid
-		});
-        this.command = function(){
-
-        };
-        var bwnzj = this;
-        setTimeout(function(){
-            bwnzj.disconnect();
-        },1084);
     },
     toppestjej: function () {
         
